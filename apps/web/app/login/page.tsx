@@ -1,10 +1,12 @@
 "use client";
 
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Wallet01Icon } from "@hugeicons/core-free-icons";
 import { FaXTwitter } from "react-icons/fa6";
 import { OTPInput, type SlotProps } from "input-otp";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
-type Step = "email" | "otp" | "verifying";
+type Step = "email" | "otp" | "verifying" | "onboard";
 
 export default function LoginPage() {
 	const [step, setStep] = useState<Step>("email");
@@ -23,115 +25,160 @@ export default function LoginPage() {
 		// TODO: call resend API with email
 	};
 
+	// Auto-advance from verifying to onboard after 2s
+	useEffect(() => {
+		if (step !== "verifying") return;
+		const t = setTimeout(() => setStep("onboard"), 2000);
+		return () => clearTimeout(t);
+	}, [step]);
+
+	const handleConnectWallet = () => {
+		// TODO: integrate wallet connection
+	};
+
 	return (
 		<main className="min-h-dvh sm:min-h-screen bg-[#0C0C0C] flex items-center justify-center px-4 sm:px-6 md:px-8 py-6 sm:py-8 overflow-x-hidden">
 			<div className="w-full max-w-md min-w-0 flex flex-col items-center">
-				{/* Title */}
-				<h1
-					className="text-[#FAFAFA] text-lg sm:text-xl md:text-lg mb-3 text-center"
-					style={{ fontFamily: "'Hedvig Serif', serif" }}
-				>
-					Welcome to Autonomi
-				</h1>
+				{/* Login section: Welcome + email/OTP/verifying + OAuth (hidden on onboard) */}
+				{step !== "onboard" && (
+					<>
+						<h1
+							className="text-[#FAFAFA] text-lg sm:text-xl md:text-lg mb-3 text-center"
+							style={{ fontFamily: "'Hedvig Serif', serif" }}
+						>
+							Welcome to Autonomi
+						</h1>
+						<p className="font-sans text-sm text-[#878787] mb-6 sm:mb-8 text-center">
+							Sign in or create an account
+						</p>
+						<div
+							className="w-full min-w-0 flex flex-col gap-3"
+							style={{ fontFamily: "'Hedvig Sans', sans-serif" }}
+						>
+							{step === "email" && (
+								<>
+									<input
+										ref={emailInputRef}
+										id="email"
+										type="email"
+										placeholder="Enter email address"
+										className="flex min-h-[44px] sm:h-9 w-full border border-[#1C1C1C] bg-transparent px-3 py-2 sm:py-1 text-base sm:text-sm text-[#FAFAFA] transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-[#878787] focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 [&:-webkit-autofill]:!bg-transparent [&:-webkit-autofill]:!bg-none [&:-webkit-autofill]:!shadow-none rounded-none"
+									/>
+									<button
+										type="button"
+										onClick={handleContinue}
+										className="flex items-center justify-center text-sm transition-colors focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 hover:bg-white/90 relative bg-white px-6 py-3 sm:py-4 text-[#0e0e0e] font-medium min-h-[44px] sm:h-[40px] w-full rounded-none cursor-pointer"
+									>
+										Continue
+									</button>
+								</>
+							)}
+							{step === "otp" && (
+								<>
+									<div className="login-otp-wrap h-[62px] w-full flex items-center justify-center">
+										<OTPInput
+											maxLength={6}
+											containerClassName="flex items-center gap-2 cursor-text select-none [&_input]:!outline-none [&_input]:!ring-0 [&_input]:!ring-offset-0 [&_input]:focus:!outline-none [&_input]:focus:!ring-0 [&_input]:focus-visible:!outline-none [&_input]:focus-visible:!ring-0 [&_input]:!shadow-none"
+											className="!outline-none !ring-0 !ring-offset-0 !shadow-none focus:!outline-none focus:!ring-0 focus-visible:!outline-none focus-visible:!ring-0"
+											onComplete={() => setStep("verifying")}
+											render={({ slots }: { slots: SlotProps[] }) => (
+												<div className="flex items-center">
+													{slots.map((slot: SlotProps, idx: number) => (
+														<OTPSlot key={idx} {...slot} />
+													))}
+												</div>
+											)}
+										/>
+									</div>
+									<div className="flex items-center justify-center gap-2 mt-2">
+										<span className="text-sm text-[#878787]">
+											Didn&apos;t receive the email?
+										</span>
+										<button
+											type="button"
+											onClick={handleResendCode}
+											className="text-sm text-[#FAFAFA] underline font-medium hover:text-[#E7E7E7] transition-colors cursor-pointer"
+										>
+											Resend code
+										</button>
+									</div>
+								</>
+							)}
+							{step === "verifying" && (
+								<div className="h-[62px] w-full flex items-center justify-center">
+									<div className="flex items-center space-x-2">
+										<svg
+											fill="none"
+											stroke="currentColor"
+											strokeWidth="1.5"
+											viewBox="0 0 24 24"
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											xmlns="http://www.w3.org/2000/svg"
+											className="animate-spin text-[#878787]"
+											style={{ width: 16, height: 16 }}
+										>
+											<path d="M12 3v3m6.366-.366-2.12 2.12M21 12h-3m.366 6.366-2.12-2.12M12 21v-3m-6.366.366 2.12-2.12M3 12h3m-.366-6.366 2.12 2.12" />
+										</svg>
+										<span className="text-sm text-[#FAFAFA] font-medium">
+											Verifying...
+										</span>
+									</div>
+								</div>
+							)}
 
-				{/* Subtitle */}
-				<p className="font-sans text-sm text-[#878787] mb-6 sm:mb-8 text-center">
-					Sign in or create an account
-				</p>
-
-				{/* Form Container */}
-				<div
-					className="w-full min-w-0 flex flex-col gap-3"
-					style={{ fontFamily: "'Hedvig Sans', sans-serif" }}
-				>
-					{/* Top slot only: email form | OTP + resend | verifying */}
-					{step === "email" && (
-						<>
-							<input
-								ref={emailInputRef}
-								id="email"
-								type="email"
-								placeholder="Enter email address"
-								className="flex min-h-[44px] sm:h-9 w-full border border-[#1C1C1C] bg-transparent px-3 py-2 sm:py-1 text-base sm:text-sm text-[#FAFAFA] transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-[#878787] focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 [&:-webkit-autofill]:!bg-transparent [&:-webkit-autofill]:!bg-none [&:-webkit-autofill]:!shadow-none rounded-none"
-							/>
-							<button
-								type="button"
-								onClick={handleContinue}
-								className="flex items-center justify-center text-sm transition-colors focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 hover:bg-white/90 relative bg-white px-6 py-3 sm:py-4 text-[#0e0e0e] font-medium min-h-[44px] sm:h-[40px] w-full rounded-none cursor-pointer"
-							>
-								Continue
+							<div className="flex items-center gap-4 my-2">
+								<div className="flex-1 min-w-0 h-px bg-[#1C1C1C]" />
+								<span className="text-[#878787] text-sm shrink-0">or</span>
+								<div className="flex-1 min-w-0 h-px bg-[#1C1C1C]" />
+							</div>
+							<button className="inline-flex items-center justify-center gap-3 font-medium focus-visible:outline-none disabled:pointer-events-none relative w-full bg-transparent border border-[#1C1C1C] text-[#FAFAFA] font-sans text-sm min-h-[44px] sm:h-[40px] px-4 sm:px-6 py-3 sm:py-4 hover:bg-[#1C1C1C]/10 transition-colors disabled:opacity-50 cursor-pointer">
+								<GoogleIcon />
+								<span>Continue with Google</span>
 							</button>
-						</>
-					)}
-					{step === "otp" && (
-						<>
-							<div className="login-otp-wrap h-[62px] w-full flex items-center justify-center">
-								<OTPInput
-									maxLength={6}
-									containerClassName="flex items-center gap-2 cursor-text select-none [&_input]:!outline-none [&_input]:!ring-0 [&_input]:!ring-offset-0 [&_input]:focus:!outline-none [&_input]:focus:!ring-0 [&_input]:focus-visible:!outline-none [&_input]:focus-visible:!ring-0 [&_input]:!shadow-none"
-									className="!outline-none !ring-0 !ring-offset-0 !shadow-none focus:!outline-none focus:!ring-0 focus-visible:!outline-none focus-visible:!ring-0"
-									onComplete={() => setStep("verifying")}
-									render={({ slots }: { slots: SlotProps[] }) => (
-										<div className="flex items-center">
-											{slots.map((slot: SlotProps, idx: number) => (
-												<OTPSlot key={idx} {...slot} />
-											))}
-										</div>
-									)}
-								/>
-							</div>
-							<div className="flex items-center justify-center gap-2 mt-2">
-								<span className="text-sm text-[#878787]">
-									Didn&apos;t receive the email?
-								</span>
-								<button
-									type="button"
-									onClick={handleResendCode}
-									className="text-sm text-[#FAFAFA] underline font-medium hover:text-[#E7E7E7] transition-colors cursor-pointer"
-								>
-									Resend code
-								</button>
-							</div>
-						</>
-					)}
-					{step === "verifying" && (
-						<div className="h-[62px] w-full flex items-center justify-center bg-[#0C0C0C]/95 border border-[#1C1C1C]">
-							<div className="flex items-center space-x-2 bg-[#0e0e0e] px-4 py-2 rounded-md shadow-sm">
-								<svg
-									fill="none"
-									stroke="currentColor"
-									strokeWidth="1.5"
-									viewBox="0 0 24 24"
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									xmlns="http://www.w3.org/2000/svg"
-									className="animate-spin text-[#878787]"
-									style={{ width: 16, height: 16 }}
-								>
-									<path d="M12 3v3m6.366-.366-2.12 2.12M21 12h-3m.366 6.366-2.12-2.12M12 21v-3m-6.366.366 2.12-2.12M3 12h3m-.366-6.366 2.12 2.12" />
-								</svg>
-								<span className="text-sm text-[#FAFAFA] font-medium">
-									Verifying...
-								</span>
-							</div>
+							<button className="inline-flex items-center justify-center gap-3 font-medium focus-visible:outline-none disabled:pointer-events-none relative w-full bg-transparent border border-[#1C1C1C] text-[#FAFAFA] font-sans text-sm min-h-[44px] sm:h-[40px] px-4 sm:px-6 py-3 sm:py-4 hover:bg-[#1C1C1C]/10 transition-colors disabled:opacity-50 cursor-pointer">
+								<FaXTwitter className="w-4 h-4 shrink-0" />
+								<span>Continue with Twitter</span>
+							</button>
 						</div>
-					)}
+					</>
+				)}
 
-					{/* Always visible: divider + OAuth */}
-					<div className="flex items-center gap-4 my-2">
-						<div className="flex-1 min-w-0 h-px bg-[#1C1C1C]" />
-						<span className="text-[#878787] text-sm shrink-0">or</span>
-						<div className="flex-1 min-w-0 h-px bg-[#1C1C1C]" />
+				{/* Onboard section: wallet connect only (no Welcome, no OAuth) */}
+				{step === "onboard" && (
+					<div
+						className="w-full min-w-0 flex flex-col gap-4 items-center"
+						style={{ fontFamily: "'Hedvig Sans', sans-serif" }}
+					>
+						<h1
+							className="text-[#FAFAFA] text-lg sm:text-xl md:text-lg mb-2 text-center"
+							style={{ fontFamily: "'Hedvig Serif', serif" }}
+						>
+							Connect your wallet
+						</h1>
+						<p className="text-sm text-[#878787] mb-2 text-center">
+							Link your web3 wallet to get started.
+						</p>
+						<button
+							type="button"
+							onClick={handleConnectWallet}
+							className="inline-flex items-center justify-center gap-3 font-medium focus-visible:outline-none relative w-full bg-[#0e0e0e] border border-[#1C1C1C] text-[#FAFAFA] text-sm min-h-[44px] sm:h-[40px] px-4 sm:px-6 py-3 sm:py-4 hover:bg-[#1a1a1a] transition-colors rounded-none cursor-pointer"
+						>
+							<HugeiconsIcon
+								icon={Wallet01Icon}
+								size={20}
+								className="shrink-0"
+							/>
+							<span>Connect wallet</span>
+						</button>
+						<button
+							type="button"
+							className="text-sm text-[#878787] hover:text-[#FAFAFA] transition-colors cursor-pointer underline font-medium"
+						>
+							Skip for now
+						</button>
 					</div>
-					<button className="inline-flex items-center justify-center gap-3 font-medium focus-visible:outline-none disabled:pointer-events-none relative w-full bg-transparent border border-[#1C1C1C] text-[#FAFAFA] font-sans text-sm min-h-[44px] sm:h-[40px] px-4 sm:px-6 py-3 sm:py-4 hover:bg-[#1C1C1C]/10 transition-colors disabled:opacity-50 cursor-pointer">
-						<GoogleIcon />
-						<span>Continue with Google</span>
-					</button>
-					<button className="inline-flex items-center justify-center gap-3 font-medium focus-visible:outline-none disabled:pointer-events-none relative w-full bg-transparent border border-[#1C1C1C] text-[#FAFAFA] font-sans text-sm min-h-[44px] sm:h-[40px] px-4 sm:px-6 py-3 sm:py-4 hover:bg-[#1C1C1C]/10 transition-colors disabled:opacity-50 cursor-pointer">
-						<FaXTwitter className="w-4 h-4 shrink-0" />
-						<span>Continue with Twitter</span>
-					</button>
-				</div>
+				)}
 
 				{/* Footer */}
 				<p className="font-sans text-xs text-[#878787] mt-8 sm:mt-12 md:mt-16 text-center w-full px-1 sm:px-0">
