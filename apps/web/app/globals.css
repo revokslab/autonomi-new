@@ -3,6 +3,12 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Hedvig fonts loaded via Google Fonts */
+:root {
+  --font-hedvig-sans: 'Hedvig Letters Sans', sans-serif;
+  --font-hedvig-serif: 'Hedvig Letters Serif', serif;
+}
+
 
 @theme inline {
   --color-background: var(--background);

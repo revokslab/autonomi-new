@@ -48,14 +48,19 @@ export default function DashboardPage() {
 					<p
 						className="font-['Hedvig_Serif',serif] text-base leading-[21px] text-white"
 						style={{
-							fontFamily: "var(--font-hedvig-serif), 'Hedvig Serif', serif",
+							fontFamily:
+								"var(--font-hedvig-serif), 'Hedvig Letters Serif', serif",
 						}}
 					>
 						Afternoon <span className="text-[#494949]">Patrick,</span>
 					</p>
 					<p
 						className="text-xs leading-4 text-[#494949]"
-						style={{ fontFamily: "var(--font-geist-sans)", fontWeight: 300 }}
+						style={{
+							fontFamily:
+								"var(--font-hedvig-sans), 'Hedvig Letters Sans', sans-serif",
+							fontWeight: 300,
+						}}
 					>
 						Here is a quick snap of your finances
 					</p>
@@ -85,7 +90,7 @@ export default function DashboardPage() {
 							className="min-h-11 border-r border-[#1E1E1E] bg-[#0A0A0A] px-6 py-3.5 text-sm leading-5 text-white transition-colors"
 							style={{
 								fontFamily:
-									"var(--font-hedvig-sans), 'Hedvig Sans', sans-serif",
+									"var(--font-hedvig-sans), 'Hedvig Letters Sans', sans-serif",
 							}}
 						>
 							Overview
@@ -95,7 +100,7 @@ export default function DashboardPage() {
 							className="min-h-11 bg-[#0B0B0B] px-6 py-3.5 text-sm leading-5 text-[#8A8A8A] transition-colors hover:text-[#B2B2B2]"
 							style={{
 								fontFamily:
-									"var(--font-hedvig-sans), 'Hedvig Sans', sans-serif",
+									"var(--font-hedvig-sans), 'Hedvig Letters Sans', sans-serif",
 							}}
 						>
 							Activity

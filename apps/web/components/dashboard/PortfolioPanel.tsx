@@ -50,7 +50,7 @@ export function PortfolioPanel() {
 							}`}
 							style={{
 								fontFamily:
-									"var(--font-hedvig-sans), 'Hedvig Sans', sans-serif",
+									"var(--font-hedvig-sans), 'Hedvig Letters Sans', sans-serif",
 							}}
 						>
 							{range}

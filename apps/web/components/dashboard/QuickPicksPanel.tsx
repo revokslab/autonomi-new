@@ -60,7 +60,10 @@ export function QuickPicksPanel() {
 					<CatLogoSmall />
 					<span
 						className="text-xs leading-4 text-[#E4E4E4]"
-						style={{ fontFamily: "var(--font-hedvig-sans)" }}
+						style={{
+							fontFamily:
+								"var(--font-hedvig-sans), 'Hedvig Letters Sans', sans-serif",
+						}}
 					>
 						Quick picks by Autonomi
 					</span>
@@ -84,7 +87,7 @@ export function QuickPicksPanel() {
 								className="text-sm leading-[18px]"
 								style={{
 									fontFamily:
-										"var(--font-hedvig-sans), 'Hedvig Sans', sans-serif",
+										"var(--font-hedvig-sans), 'Hedvig Letters Sans', sans-serif",
 									fontWeight: 200,
 									background:
 										"linear-gradient(90deg, #FAFAFA 0%, #949494 57.69%)",
@@ -104,7 +107,8 @@ export function QuickPicksPanel() {
 					type="button"
 					className="flex items-center justify-center gap-2 border border-[#1E1E1E] bg-[#0B0B0B] px-3 py-3.5 text-xs leading-4 text-white transition-colors hover:bg-[#141414]"
 					style={{
-						fontFamily: "var(--font-hedvig-sans), 'Hedvig Sans', sans-serif",
+						fontFamily:
+							"var(--font-hedvig-sans), 'Hedvig Letters Sans', sans-serif",
 					}}
 				>
 					<RefreshCw className="h-4 w-4" strokeWidth={1.1} />
@@ -114,7 +118,8 @@ export function QuickPicksPanel() {
 					type="button"
 					className="flex items-center justify-center gap-2 bg-[#131313] px-3 py-3.5 text-xs leading-4 text-white transition-colors hover:bg-[#1a1a1a]"
 					style={{
-						fontFamily: "var(--font-hedvig-sans), 'Hedvig Sans', sans-serif",
+						fontFamily:
+							"var(--font-hedvig-sans), 'Hedvig Letters Sans', sans-serif",
 					}}
 				>
 					<Share2 className="h-4 w-4" strokeWidth={1.1} />

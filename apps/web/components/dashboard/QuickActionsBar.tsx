@@ -22,7 +22,8 @@ export function QuickActionsBar() {
 					type="button"
 					className="flex items-center justify-center gap-2 bg-[#131313] px-3 py-3.5 text-xs leading-4 text-white transition-colors hover:bg-[#1a1a1a]"
 					style={{
-						fontFamily: "var(--font-hedvig-sans), 'Hedvig Sans', sans-serif",
+						fontFamily:
+							"var(--font-hedvig-sans), 'Hedvig Letters Sans', sans-serif",
 					}}
 				>
 					<BarChart3

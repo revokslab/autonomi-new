@@ -38,7 +38,8 @@ export function MetricCard({
 			<span
 				className="text-[11.82px] leading-6 text-[#B2B2B2]"
 				style={{
-					fontFamily: "var(--font-hedvig-sans), 'Hedvig Sans', sans-serif",
+					fontFamily:
+						"var(--font-hedvig-sans), 'Hedvig Letters Sans', sans-serif",
 				}}
 			>
 				{title}
@@ -78,7 +79,7 @@ export function MetricCard({
 							className="text-[11.82px] leading-5 text-[#B2B2B2]"
 							style={{
 								fontFamily:
-									"var(--font-hedvig-sans), 'Hedvig Sans', sans-serif",
+									"var(--font-hedvig-sans), 'Hedvig Letters Sans', sans-serif",
 							}}
 						>
 							{changeLabel}
