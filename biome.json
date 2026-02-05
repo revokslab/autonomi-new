@@ -23,6 +23,21 @@
 			"quoteStyle": "double"
 		}
 	},
+	"css": {
+		"formatter": {
+			"enabled": true,
+			"indentWidth": 2
+		},
+		"parser": {
+			"tailwindDirectives": true
+		}
+	},
+	"json": {
+		"formatter": {
+			"enabled": true,
+			"indentWidth": 2
+		}
+	},
 	"assist": {
 		"enabled": true,
 		"actions": {
