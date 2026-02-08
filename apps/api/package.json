@@ -5,16 +5,21 @@
 		"lint": "biome check .",
 		"lint:fix": "biome check --write .",
 		"format": "biome format --write .",
-		"typecheck": "tsc --noEmit"
+		"typecheck": "tsc --noEmit",
+		"generate-migration": "drizzle-kit generate"
 	},
 	"dependencies": {
 		"@hono/trpc-server": "^0.4.2",
 		"@hono/zod-openapi": "^1.2.1",
+		"@openrouter/ai-sdk-provider": "^2.1.1",
+		"@socket.io/bun-engine": "^0.1.0",
+		"ai": "^6.0.77",
 		"better-auth": "^1.4.17",
 		"drizzle-orm": "^0.45.1",
 		"hono": "^4.11.7",
 		"ksuid": "^3.0.0",
 		"postgres": "^3.4.8",
+		"socket.io": "^4.8.3",
 		"superjson": "^2.2.6",
 		"winston": "^3.19.0",
 		"zod": "^4.3.6"
