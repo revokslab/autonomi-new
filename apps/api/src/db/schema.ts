@@ -102,8 +102,6 @@ export const accountRelations = relations(account, ({ one }) => ({
 	}),
 }));
 
-// Wallets
-
 // Agent
 
 export const agentTaskStatus = pgEnum("agent_task_status", [
