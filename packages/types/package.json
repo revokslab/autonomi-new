@@ -25,7 +25,7 @@
 		"typescript": "^5"
 	},
 	"dependencies": {
-		"ai": "^6.0.77",
+		"ai": "catalog:",
 		"nanoid": "^5.1.6"
 	}
 }

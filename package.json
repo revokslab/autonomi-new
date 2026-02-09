@@ -19,10 +19,17 @@
 		"typecheck": "turbo typecheck",
 		"prepare": "husky"
 	},
-	"workspaces": [
-		"packages/*",
-		"apps/*"
-	],
+	"workspaces": {
+		"packages": [
+			"packages/*",
+			"apps/*"
+		],
+		"catalog": {
+			"better-auth": "^1.4.17",
+			"ai": "^6.0.77",
+			"zod": "^4.3.6"
+		}
+	},
 	"lint-staged": {
 		"*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}": [
 			"biome format --write --no-errors-on-unmatched"
