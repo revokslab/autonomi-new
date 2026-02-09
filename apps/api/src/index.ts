@@ -1,22 +1,16 @@
 import { Server as Engine } from "@socket.io/bun-engine";
 import { cors } from "hono/cors";
 import { secureHeaders } from "hono/secure-headers";
-import { Server } from "socket.io";
 
 import { env } from "./env-runtime";
 import { auth } from "./lib/auth";
 import { routers } from "./rest/routers";
 import { createRouter } from "./utils";
+import { createSocketServer } from "./websocket";
 
-const io = new Server();
 const engine = new Engine();
 
-io.bind(engine);
-
-io.on("connection", (socket) => {
-	// ...
-	console.log(socket.connected);
-});
+createSocketServer(engine);
 
 const app = createRouter();
 
