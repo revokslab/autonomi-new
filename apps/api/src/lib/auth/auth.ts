@@ -1,7 +1,8 @@
-import { db } from "@api/db";
-import { env } from "@api/env-runtime";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
+
+import { db } from "@api/db";
+import { env } from "@api/env-runtime";
 
 export const auth = betterAuth({
 	basePath: "/auth",

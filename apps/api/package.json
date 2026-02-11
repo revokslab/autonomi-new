@@ -6,7 +6,8 @@
 		"lint:fix": "biome check --write .",
 		"format": "biome format --write .",
 		"typecheck": "tsc --noEmit",
-		"generate-migration": "drizzle-kit generate"
+		"generate-migration": "drizzle-kit generate",
+		"migrate:local": "drizzle-kit migrate"
 	},
 	"dependencies": {
 		"@ai-sdk/google": "^3.0.24",

@@ -1,0 +1,1 @@
+ALTER TABLE "chat_messages" RENAME COLUMN "llm_model" TO "role";
