@@ -248,3 +248,5 @@ export class AgentService {
 		this.stopRequested.delete(taskId);
 	}
 }
+
+export const agentService = new AgentService();
