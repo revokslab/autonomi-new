@@ -1,4 +1,5 @@
 import type { Environment } from "@api/env";
+
 import type { Database } from "./db";
 
 export type HonoVariables = {

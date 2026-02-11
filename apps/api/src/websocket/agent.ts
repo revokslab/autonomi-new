@@ -1,7 +1,7 @@
 import type {
 	ClientToServerEvents,
+	CustomUIMessageChunk,
 	ServerToClientEvents,
-	StreamChunk,
 } from "@autonomi/types";
 import type { Server as Engine } from "@socket.io/bun-engine";
 import { Server, type Socket } from "socket.io";
@@ -14,7 +14,7 @@ interface ConnectionState {
 }
 
 interface TaskStreamState {
-	chunks: StreamChunk[];
+	chunks: CustomUIMessageChunk[];
 	isStreaming: boolean;
 }
 
@@ -24,7 +24,6 @@ const connectionStates = new Map<string, ConnectionState>();
 const taskStreamStates = new Map<string, TaskStreamState>();
 let io: Server<ClientToServerEvents, ServerToClientEvents>;
 
-// Helper functions for task stream state management
 function getOrCreateTaskStreamState(taskId: string): TaskStreamState {
 	const existingState = taskStreamStates.get(taskId);
 	if (existingState) {
@@ -57,8 +56,6 @@ export function createSocketServer(
 
 	io.on("connection", (socket: TypedSocket) => {
 		const connectionId = socket.id;
-
-		// Initialize connection state
 		const existingState = connectionStates.get(connectionId);
 
 		const connectionState: ConnectionState = {
@@ -83,7 +80,6 @@ export function createSocketServer(
 			}
 		});
 
-		// Handle connection errors
 		socket.on("error", (error) => {
 			console.error(`[SOCKET] Connection error for ${connectionId}:`, error);
 		});
@@ -93,10 +89,8 @@ export function createSocketServer(
 				`[SOCKET] User disconnected: ${connectionId}, reason: ${reason}`,
 			);
 
-			// Keep connection state for potential reconnection
 			const state = connectionStates.get(connectionId);
 			if (state) {
-				// Mark as disconnected but keep state for 5 minutes
 				setTimeout(
 					() => {
 						connectionStates.delete(connectionId);
@@ -105,7 +99,7 @@ export function createSocketServer(
 						);
 					},
 					5 * 60 * 1000,
-				); // 5 minutes
+				);
 			}
 		});
 	});
@@ -138,22 +132,17 @@ export function handleStreamError(error: unknown, taskId: string) {
 	console.log(`[SOCKET] Stream error for task ${taskId}:`, error);
 }
 
-export function emitStreamChunk(chunk: StreamChunk, taskId: string) {
-	// Store the chunk for state recovery (exclude complete/error chunks from state)
-	if (chunk.type !== "complete" && chunk.type !== "error") {
-		const streamState = getOrCreateTaskStreamState(taskId);
-		streamState.chunks.push(chunk);
-	}
+export function emitStreamChunk(chunk: CustomUIMessageChunk, taskId: string) {
+	const chunkType = chunk.type;
 
 	if (io) {
 		emitToTask(taskId, "stream-chunk", chunk);
 	}
 
-	if (chunk.type === "complete") {
-		console.log(`[SOCKET] Chunk type: complete for task ${taskId}`);
+	if (chunkType === "finish" || chunkType === "finish-step") {
+		console.log(`[SOCKET] Chunk type: ${chunkType} for task ${taskId}`);
 		endStream(taskId);
 	}
 }
 
-// Export cleanup functions for task memory management
 export { cleanupTaskStreamState };

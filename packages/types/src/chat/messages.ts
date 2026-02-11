@@ -3,13 +3,11 @@ import type {
 	FinishReason,
 	TextPart,
 	ToolResultPart,
+	UIMessage,
 } from "ai";
-
-import type { TaskStatus } from "../core/index";
 import type { ToolExecutionStatusType } from "../tools/execution";
 import type { ToolResultTypes } from "../tools/tool-schemas";
 
-// Error part type for AI SDK error chunks
 export interface ErrorPart {
 	type: "error";
 	error: string;
@@ -27,12 +25,9 @@ export interface RedactedReasoningPart {
 	data: string;
 }
 
-// Extended ToolCallPart with streaming state tracking
 export interface ToolCallPart extends BaseToolCallPart {
-	// Streaming state properties
 	streamingState?: "starting" | "streaming" | "complete";
-	argsComplete?: boolean; // Are args fully received?
-
+	argsComplete?: boolean;
 	accumulatedArgsText?: string;
 	partialArgs?: {
 		target_coin?: string;
@@ -58,22 +53,6 @@ export type CompletionTokenUsage = {
 	totalTokens: number;
 };
 
-export type Message = {
-	id: string;
-	role: "user" | "assistant" | "tool" | "system";
-	content: string;
-	llmModel: string;
-	createdAt: string;
-	metadata?: MessageMetadata;
-	stackedTaskId?: string;
-	stackedTask?: {
-		id: string;
-		title: string;
-		shadowBranch?: string;
-		status?: TaskStatus;
-	};
-};
-
 export interface MessageMetadata {
 	tool?: {
 		name: string;
@@ -81,9 +60,6 @@ export interface MessageMetadata {
 		status: ToolExecutionStatusType;
 		result?: ToolResultTypes["result"];
 	};
-
-	parts?: AssistantMessagePart[];
-
 	isStreaming?: boolean;
 	streamingState?: "starting" | "streaming" | "complete";
 	partialArgs?: {
@@ -94,30 +70,8 @@ export interface MessageMetadata {
 		stop_loss?: number;
 		take_profit?: number;
 	};
-
-	// LLM usage metadata
-	usage?: {
-		promptTokens: number;
-		completionTokens: number;
-		totalTokens: number;
-	};
-
-	// Finish reason
+	usage?: CompletionTokenUsage;
 	finishReason?: FinishReason;
 }
 
-// Type guards for runtime type checking
-export const isUserMessage = (
-	message: Message,
-): message is Message & { role: "user" } =>
-	message.role.toLowerCase() === "user";
-
-export const isAssistantMessage = (
-	message: Message,
-): message is Message & { role: "assistant" } =>
-	message.role.toLowerCase() === "assistant";
-
-export const isSystemMessage = (
-	message: Message,
-): message is Message & { role: "system" } =>
-	message.role.toLowerCase() === "system";
+export type Message = UIMessage<MessageMetadata>;

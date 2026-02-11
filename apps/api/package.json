@@ -9,6 +9,8 @@
 		"generate-migration": "drizzle-kit generate"
 	},
 	"dependencies": {
+		"@ai-sdk/google": "^3.0.24",
+		"@ai-sdk/provider": "^3.0.8",
 		"@autonomi/types": "workspace:*",
 		"@hono/trpc-server": "^0.4.2",
 		"@hono/zod-openapi": "^1.2.1",

@@ -26,6 +26,7 @@
 	},
 	"dependencies": {
 		"ai": "catalog:",
+		"zod": "catalog:",
 		"nanoid": "^5.1.6"
 	}
 }

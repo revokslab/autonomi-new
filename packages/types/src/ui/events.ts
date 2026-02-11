@@ -1,6 +1,6 @@
 import type { Message } from "../chat/messages";
-import type { StreamChunk } from "../chat/streaming-client";
 import type { TaskStatus } from "../core/tasks";
+import type { CustomUIMessageChunk } from "../llm/types";
 
 export type QueuedActionUI = {
 	type: "message";
@@ -29,11 +29,11 @@ export type ServerToClientEvents = {
 
 	"chat-history-error": (data: { error: string }) => void;
 	"stream-state": (state: {
-		chunks: StreamChunk[];
+		chunks: CustomUIMessageChunk[];
 		isStreaming: boolean;
 		totalChunks: number;
 	}) => void;
-	"stream-chunk": (chunk: StreamChunk) => void;
+	"stream-chunk": (chunk: CustomUIMessageChunk) => void;
 	"stream-complete": () => void;
 	"stream-error": (error: unknown) => void;
 	"stream-update": (data: {
