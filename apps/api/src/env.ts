@@ -15,7 +15,9 @@ const EnvSchema = z.object({
 	TWITTER_CLIENT_ID: z.string(),
 	TWITTER_CLIENT_SECRET: z.string(),
 
+	// ai providers
 	OPENROUTER_API_KEY: z.string().optional(),
+	GOOGLE_GENERATIVE_AI_API_KEY: z.string(),
 });
 
 export type Environment = z.infer<typeof EnvSchema>;
