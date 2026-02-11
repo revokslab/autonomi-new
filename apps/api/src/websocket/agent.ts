@@ -43,6 +43,21 @@ function cleanupTaskStreamState(taskId: string): void {
 	console.log(`[SOCKET] Cleaned up stream state for task ${taskId}`);
 }
 
+async function verifyTaskAccess(
+	_socketId: string,
+	taskId: string,
+): Promise<boolean> {
+	try {
+		// For now, just check if task exists
+		// TODO: Add proper user authentication and authorization
+		const task = await getAgentTaskById(db, taskId);
+		return !!task;
+	} catch (error) {
+		console.error(`[SOCKET] Error verifying task access:`, error);
+		return false;
+	}
+}
+
 export function emitToTask(
 	taskId: string,
 	event: keyof ServerToClientEvents,
@@ -54,7 +69,9 @@ export function emitToTask(
 export function createSocketServer(
 	engine: Engine,
 ): Server<ClientToServerEvents, ServerToClientEvents> {
-	io = new Server({});
+	io = new Server({
+		allowEIO3: true,
+	});
 
 	io.bind(engine);
 
@@ -108,6 +125,13 @@ export function createSocketServer(
 
 		socket.on("join-task", async (data) => {
 			try {
+				const hasAccess = await verifyTaskAccess(connectionId, data.taskId);
+
+				if (!hasAccess) {
+					socket.emit("message-error", { error: "Access denied to task" });
+					return;
+				}
+
 				// Join the task room
 				await socket.join(`task-${data.taskId}`);
 				console.log(
@@ -154,6 +178,13 @@ export function createSocketServer(
 
 		socket.on("stop-stream", async (data) => {
 			try {
+				const hasAccess = await verifyTaskAccess(connectionId, data.taskId);
+
+				if (!hasAccess) {
+					socket.emit("message-error", { error: "Access denied to task" });
+					return;
+				}
+
 				console.log("Received stop stream request for task:", data.taskId);
 
 				await agentService.stopStream(data.taskId);
@@ -170,6 +201,12 @@ export function createSocketServer(
 		// Handle user message
 		socket.on("user-message", async (data) => {
 			try {
+				const hasAccess = await verifyTaskAccess(connectionId, data.taskId);
+				if (!hasAccess) {
+					socket.emit("message-error", { error: "Access denied to task" });
+					return;
+				}
+
 				console.log("Received user message:", data);
 
 				// Get task workspace path and user info from database
@@ -202,6 +239,12 @@ export function createSocketServer(
 			});
 
 			try {
+				const hasAccess = await verifyTaskAccess(connectionId, data.taskId);
+				if (!hasAccess) {
+					socket.emit("message-error", { error: "Access denied to task" });
+					return;
+				}
+
 				const history = await agentService.getChatHistory(data.taskId);
 				console.log(`[SOCKET] Successfully retrieved chat history:`, {
 					taskId: data.taskId,

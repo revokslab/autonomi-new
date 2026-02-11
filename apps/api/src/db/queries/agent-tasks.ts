@@ -6,8 +6,8 @@ import {
 	type AgentTaskInitStatus,
 	type AgentTaskStatus,
 	type AgentTodo,
-	type ChatMessage,
 	agentTasks,
+	type ChatMessage,
 } from "@api/db/schema";
 
 export type AgentTaskInsert = {

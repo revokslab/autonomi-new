@@ -163,7 +163,7 @@ export class AgentService {
 		}
 
 		try {
-			const stream = await this.llmService.createMessageStream(
+			const stream = this.llmService.createMessageStream(
 				systemPrompt,
 				messages,
 				taskId,

@@ -1,7 +1,9 @@
 import { Server as Engine } from "@socket.io/bun-engine";
+import { sql } from "drizzle-orm";
 import { cors } from "hono/cors";
 import { secureHeaders } from "hono/secure-headers";
 
+import { db } from "@api/db";
 import { env } from "./env-runtime";
 import { auth } from "./lib/auth";
 import { routers } from "./rest/routers";
@@ -44,6 +46,11 @@ app.on(["POST", "GET"], "/auth/*", (c) => {
 });
 
 app.route("/v1", routers);
+
+app.get("/health", async (c) => {
+	await db.execute(sql`SELECT 1`);
+	return c.json({ status: "ok" });
+});
 
 app.all("/socket.io/", (c) => {
 	const request = c.req.raw;
