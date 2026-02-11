@@ -8,6 +8,13 @@
 			"when": 1770549982507,
 			"tag": "0000_hot_maestro",
 			"breakpoints": true
+		},
+		{
+			"idx": 1,
+			"version": "7",
+			"when": 1770817213473,
+			"tag": "0001_aromatic_rockslide",
+			"breakpoints": true
 		}
 	]
 }
