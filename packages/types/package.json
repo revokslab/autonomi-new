@@ -1,0 +1,32 @@
+{
+	"name": "@autonomi/types",
+	"module": "index.ts",
+	"type": "module",
+	"version": "0.0.0",
+	"private": true,
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.js"
+		}
+	},
+	"devDependencies": {
+		"@types/bun": "latest"
+	},
+	"scripts": {
+		"build": "tsc",
+		"dev": "tsc --watch",
+		"lint": "eslint 'src/**/*.ts'",
+		"typecheck": "tsc --noEmit --pretty"
+	},
+	"peerDependencies": {
+		"typescript": "^5"
+	},
+	"dependencies": {
+		"ai": "catalog:",
+		"zod": "catalog:",
+		"nanoid": "^5.1.6"
+	}
+}
