@@ -2,12 +2,13 @@
 
 import { LayoutGrid, SlidersHorizontal } from "lucide-react";
 import { useState } from "react";
+
+import { AIInputBox } from "@/components/dashboard/AIInputBox";
 import { Header } from "@/components/dashboard/Header";
 import { MetricCard } from "@/components/dashboard/MetricCard";
-import { QuickPicksPanel } from "@/components/dashboard/QuickPicksPanel";
 import { PortfolioPanel } from "@/components/dashboard/PortfolioPanel";
 import { QuickActionsBar } from "@/components/dashboard/QuickActionsBar";
-import { AIInputBox } from "@/components/dashboard/AIInputBox";
+import { QuickPicksPanel } from "@/components/dashboard/QuickPicksPanel";
 
 const metrics = [
 	{
