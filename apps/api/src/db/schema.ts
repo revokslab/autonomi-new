@@ -1,3 +1,4 @@
+import type { InferSelectModel } from "drizzle-orm";
 import { relations } from "drizzle-orm";
 import {
 	boolean,
@@ -251,3 +252,15 @@ export const userSettings = pgTable("user_settings", {
 	createdAt: timestamp("created_at").defaultNow(),
 	updatedAt: timestamp("updated_at"),
 });
+
+export type User = InferSelectModel<typeof user>;
+export type Session = InferSelectModel<typeof session>;
+export type Account = InferSelectModel<typeof account>;
+export type AgentTask = InferSelectModel<typeof agentTasks>;
+export type AgentTodo = InferSelectModel<typeof agentTodos>;
+export type ChatMessage = InferSelectModel<typeof chatMessages>;
+export type AgentTaskMemory = InferSelectModel<typeof agentTaskMemories>;
+export type UserSetting = InferSelectModel<typeof userSettings>;
+
+export type AgentTaskMemoryCategory =
+	(typeof agentTaskMemoryCategory.enumValues)[number];
