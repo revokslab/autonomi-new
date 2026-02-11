@@ -6,7 +6,7 @@ import { type ChatMessage, chatMessages } from "@api/db/schema";
 export type ChatMessageInsert = {
 	id: string;
 	content: string;
-	llmModel: string;
+	role: "user" | "assistant" | "system";
 	taskId: string;
 	metadata?: Record<string, unknown> | null;
 	sequence?: number | null;
@@ -21,7 +21,7 @@ export type ChatMessageInsert = {
 export type ChatMessageUpdate = {
 	id: string;
 	content?: string;
-	llmModel?: string;
+	role?: "user" | "assistant" | "system";
 	metadata?: Record<string, unknown> | null;
 	sequence?: number | null;
 	promptTokens?: number | null;

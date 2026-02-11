@@ -183,7 +183,7 @@ export const agentTodosRelations = relations(agentTodos, ({ one }) => ({
 export const chatMessages = pgTable("chat_messages", {
 	id: text().primaryKey(),
 	content: text().notNull(),
-	llmModel: text("llm_model").notNull(),
+	role: text().notNull().$type<"user" | "assistant" | "system">(),
 	metadata: jsonb(),
 	sequence: integer(),
 	promptTokens: integer("prompt_tokens"),
