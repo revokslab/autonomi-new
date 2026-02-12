@@ -22,7 +22,7 @@ COPY --from=builder /app/out/json/ .
 COPY bunfig.toml .
 
 # Install dependencies
-RUN bun install
+RUN bun install --frozen-lockfile
 
 # Copy full source from pruned workspace
 COPY --from=builder /app/out/full/ .
@@ -35,7 +35,15 @@ ARG NEXT_PUBLIC_PRIVY_APP_ID
 ENV NODE_ENV=production
 ENV CI=1
 ENV TURBO_UI=plain
-RUN bunx turbo run build --filter=@autonomi/web --only
+ENV TURBO_TELEMETRY_DISABLED=1
+
+# Force no cache, no daemon, single run
+RUN bunx turbo run build \
+    --filter=@autonomi/web \
+    --force \
+    --no-cache \
+    --no-daemon \
+    -- --no-lint
 
 # Runner stage - clean bun image, no turbo
 FROM oven/bun:1.3.9 AS runner
