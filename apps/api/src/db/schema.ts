@@ -128,7 +128,6 @@ export const agentTasks = pgTable("agent_tasks", {
 	id: text().primaryKey(),
 	title: text(),
 	taskStatus: agentTaskStatus("task_status").default("INITIALIZING"),
-	mainModel: text("main_model"),
 	initStatus: agentTaskInitStatus("init_status").default("INACTIVE"),
 	initializationError: text(),
 	errorMessage: text(),

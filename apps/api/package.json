@@ -16,6 +16,7 @@
 		"@hono/trpc-server": "^0.4.2",
 		"@hono/zod-openapi": "^1.2.1",
 		"@openrouter/ai-sdk-provider": "^2.1.1",
+		"@scalar/hono-api-reference": "^0.9.40",
 		"@socket.io/bun-engine": "^0.1.0",
 		"ai": "catalog:",
 		"better-auth": "catalog:",

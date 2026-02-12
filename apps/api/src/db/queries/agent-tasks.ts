@@ -15,7 +15,6 @@ export type AgentTaskInsert = {
 	userId: string;
 	title?: string | null;
 	taskStatus?: AgentTaskStatus;
-	mainModel?: string | null;
 	initStatus?: AgentTaskInitStatus;
 	initializationError?: string | null;
 	errorMessage?: string | null;
@@ -25,7 +24,6 @@ export type AgentTaskUpdate = {
 	id: string;
 	title?: string | null;
 	taskStatus?: AgentTaskStatus;
-	mainModel?: string | null;
 	initStatus?: AgentTaskInitStatus;
 	initializationError?: string | null;
 	errorMessage?: string | null;
