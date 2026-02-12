@@ -101,7 +101,7 @@ export function PortfolioPanel() {
 						aria-expanded={isDropdownOpen}
 					>
 						<div
-							className="h-[19px] w-[19px] shrink-0 rounded-full"
+							className="h-[19px] w-[19px] shrink-0 rounded-none"
 							style={{ backgroundColor: selectedAsset.color }}
 							aria-hidden
 						/>
@@ -135,7 +135,7 @@ export function PortfolioPanel() {
 									}`}
 								>
 									<div
-										className="h-[19px] w-[19px] shrink-0 rounded-full"
+										className="h-[19px] w-[19px] shrink-0 rounded-none"
 										style={{ backgroundColor: asset.color }}
 										aria-hidden
 									/>

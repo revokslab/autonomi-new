@@ -3,16 +3,18 @@
 import { LayoutGrid, Wallet, Bot, Briefcase, Zap } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 const navItems = [
-	{ href: "/dashboard", icon: LayoutGrid, label: "Dashboard", active: true },
-	{ href: "#", icon: Wallet, label: "Wallet", active: false },
-	{ href: "#", icon: Bot, label: "AI", active: false },
-	{ href: "#", icon: Briefcase, label: "Portfolio", active: false },
-	{ href: "#", icon: Zap, label: "Actions", active: false },
+	{ href: "/dashboard", icon: LayoutGrid, label: "Dashboard" },
+	{ href: "#", icon: Wallet, label: "Wallet" },
+	{ href: "#", icon: Bot, label: "AI" },
+	{ href: "/dashboard/portfolio", icon: Briefcase, label: "Portfolio" },
+	{ href: "#", icon: Zap, label: "Actions" },
 ];
 
 export function Sidebar() {
+	const pathname = usePathname();
 	return (
 		<aside className="fixed left-0 top-0 z-30 flex h-screen w-[86px] flex-col border-r border-[#1E1E1E] bg-[#0B0B0B]">
 			<div className="flex h-[77px] shrink-0 items-center justify-center border-b border-[#1E1E1E] px-6">
@@ -27,7 +29,7 @@ export function Sidebar() {
 			<nav className="flex flex-1 flex-col gap-3 p-6">
 				{navItems.map((item) => {
 					const Icon = item.icon;
-					const isActive = item.active;
+					const isActive = pathname === item.href;
 					return (
 						<Link
 							key={item.label}

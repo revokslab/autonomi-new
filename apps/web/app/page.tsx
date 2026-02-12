@@ -1,64 +1,204 @@
 import Image from "next/image";
+import Link from "next/link";
+
+function Keycap({ letter }: { letter: string }) {
+	return (
+		<span
+			className="inline-flex h-5 w-5 items-center justify-center border border-neutral-800 bg-neutral-900 text-[10px] font-medium text-white"
+			style={{ borderRadius: 3 }}
+			aria-hidden
+		>
+			{letter}
+		</span>
+	);
+}
+
+function ButtonWithCorners({ children }: { children: React.ReactNode }) {
+	const barClass = "pointer-events-none absolute bg-[#7B7B7B] aria-hidden";
+	// Each corner gets a full cross (plus): vertical + horizontal bar crossing at the corner
+	const arm = 6; // length each way from corner (long arms)
+	const stroke = 1; // thin lines
+	return (
+		<span className="relative inline-block">
+			{children}
+			{/* Top-left: cross centered on corner */}
+			<span
+				className={barClass}
+				style={{
+					left: -stroke / 2,
+					top: -arm,
+					width: `${stroke}px`,
+					height: `${arm * 2}px`,
+				}}
+			/>
+			<span
+				className={barClass}
+				style={{
+					left: -arm,
+					top: -stroke / 2,
+					width: `${arm * 2}px`,
+					height: `${stroke}px`,
+				}}
+			/>
+			{/* Top-right */}
+			<span
+				className={barClass}
+				style={{
+					right: -stroke / 2,
+					top: -arm,
+					width: `${stroke}px`,
+					height: `${arm * 2}px`,
+				}}
+			/>
+			<span
+				className={barClass}
+				style={{
+					right: -arm,
+					top: -stroke / 2,
+					width: `${arm * 2}px`,
+					height: `${stroke}px`,
+				}}
+			/>
+			{/* Bottom-left */}
+			<span
+				className={barClass}
+				style={{
+					left: -stroke / 2,
+					bottom: -arm,
+					width: `${stroke}px`,
+					height: `${arm * 2}px`,
+				}}
+			/>
+			<span
+				className={barClass}
+				style={{
+					left: -arm,
+					bottom: -stroke / 2,
+					width: `${arm * 2}px`,
+					height: `${stroke}px`,
+				}}
+			/>
+			{/* Bottom-right */}
+			<span
+				className={barClass}
+				style={{
+					right: -stroke / 2,
+					bottom: -arm,
+					width: `${stroke}px`,
+					height: `${arm * 2}px`,
+				}}
+			/>
+			<span
+				className={barClass}
+				style={{
+					right: -arm,
+					bottom: -stroke / 2,
+					width: `${arm * 2}px`,
+					height: `${stroke}px`,
+				}}
+			/>
+		</span>
+	);
+}
 
 export default function Home() {
 	return (
-		<div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-			<main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-				<Image
-					className="dark:invert"
-					src="/next.svg"
-					alt="Next.js logo"
-					width={100}
-					height={20}
-					priority
-				/>
-				<div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-					<h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-						To get started, edit the page.tsx file.
-					</h1>
-					<p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-						Looking for a starting point or more instructions? Head over to{" "}
-						<a
-							href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-							className="font-medium text-zinc-950 dark:text-zinc-50"
+		<div className="min-h-screen bg-[#fafafa] text-neutral-900">
+			{/* Header */}
+			<header className="mx-auto flex w-full max-w-[980px] items-center justify-between px-6 py-4">
+				<Link href="/" className="flex items-center" aria-label="Home">
+					<Image
+						src="/logo.svg"
+						alt=""
+						width={32}
+						height={32}
+						className="h-8 w-8 object-contain invert"
+					/>
+				</Link>
+				<nav className="flex items-center gap-6">
+					<ButtonWithCorners>
+						<Link
+							href="#demo"
+							className="flex items-center gap-2 rounded-sm border border-neutral-300 bg-transparent px-6 py-2 text-sm font-normal text-neutral-900 transition hover:bg-neutral-100/80"
+							style={{ fontFamily: "var(--font-dm-mono), monospace" }}
 						>
-							Templates
-						</a>{" "}
-						or the{" "}
-						<a
-							href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-							className="font-medium text-zinc-950 dark:text-zinc-50"
+							Demo <Keycap letter="D" />
+						</Link>
+					</ButtonWithCorners>
+					<ButtonWithCorners>
+						<Link
+							href="/login"
+							className="flex items-center gap-2 rounded-md border border-neutral-300 bg-transparent px-6 py-2 text-sm font-normal text-neutral-900 transition hover:bg-neutral-100/80"
+							style={{ fontFamily: "var(--font-dm-mono), monospace" }}
 						>
-							Learning
-						</a>{" "}
-						center.
-					</p>
+							Login <Keycap letter="L" />
+						</Link>
+					</ButtonWithCorners>
+				</nav>
+			</header>
+
+			{/* Hero */}
+			<main className="flex min-h-[calc(100vh-65px)] flex-col items-center justify-center px-6 py-16 text-center">
+				{/* Backed by */}
+				<div className="mb-6 flex w-full justify-center">
+					<ButtonWithCorners>
+						<p
+							className="flex flex-wrap items-center justify-center gap-1.5 py-2 px-3 text-sm text-neutral-600"
+							style={{ fontFamily: "var(--font-dm-mono), monospace" }}
+						>
+							<span
+								className="flex h-5 w-5 shrink-0 items-center justify-center rounded-sm bg-black"
+								aria-hidden
+							>
+								<svg width="14" height="14" viewBox="0 0 12 12" fill="none">
+									{/* 4-point star (4 legs) */}
+									<path
+										d="M6 0L7.5 4.5L12 6L7.5 7.5L6 12L4.5 7.5L0 6L4.5 4.5L6 0Z"
+										fill="#FF9400"
+									/>
+								</svg>
+							</span>
+							<span>Backed by</span>
+							<span className="font-medium text-[#FF6B52]">Star</span>
+							<span>W26</span>
+						</p>
+					</ButtonWithCorners>
 				</div>
-				<div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-					<a
-						className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-						href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-						target="_blank"
-						rel="noopener noreferrer"
+
+				{/* Headline - Kalice from public/fonts/Kalice-Trial-Regular.ttf */}
+				<h1
+					className="mb-6 max-w-4xl whitespace-nowrap text-[96px] font-normal leading-tight tracking-tight text-neutral-900 sm:whitespace-normal sm:text-[36px] md:text-[48px] lg:text-[72px]"
+					style={{
+						fontFamily: "var(--font-hero), serif",
+						fontWeight: 400,
+					}}
+				>
+					Your wallet got a brain,
+					<br className="hidden sm:block" /> Now it thinks.
+				</h1>
+
+				{/* Subheadline - DM Mono */}
+				<p
+					className="mb-10 max-w-2xl text-[16px] text-neutral-600"
+					style={{
+						fontFamily: "var(--font-dm-mono), monospace",
+						lineHeight: "1.2em",
+					}}
+				>
+					Beyond a wallet, it’s your crypto agent that thinks, trades, stakes
+					and manage assets while you focus on what matters — just command.
+				</p>
+
+				{/* CTA */}
+				<ButtonWithCorners>
+					<Link
+						href="#book"
+						className="inline-flex items-center gap-2 rounded-none border border-neutral-300 bg-transparent px-8 py-3 text-sm font-normal text-neutral-900 transition hover:bg-neutral-100/80"
+						style={{ fontFamily: "var(--font-dm-mono), monospace" }}
 					>
-						<Image
-							className="dark:invert"
-							src="/vercel.svg"
-							alt="Vercel logomark"
-							width={16}
-							height={16}
-						/>
-						Deploy Now
-					</a>
-					<a
-						className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-						href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						Documentation
-					</a>
-				</div>
+						Get Started <Keycap letter="G" />
+					</Link>
+				</ButtonWithCorners>
 			</main>
 		</div>
 	);

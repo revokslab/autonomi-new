@@ -30,7 +30,7 @@ export function Header() {
 					<Bell className="h-4 w-4" strokeWidth={1.2} />
 				</button>
 				<div
-					className="h-9 w-9 shrink-0 rounded-full bg-[#282828] flex items-center justify-center text-[#B2B2B2] text-sm font-medium"
+					className="h-9 w-9 shrink-0 rounded-none bg-[#282828] flex items-center justify-center text-[#B2B2B2] text-sm font-medium"
 					style={{
 						fontFamily:
 							"var(--font-hedvig-sans), 'Hedvig Letters Sans', sans-serif",
