@@ -1,6 +1,6 @@
 "use client";
 
-import { Send, ChevronDown } from "lucide-react";
+import { Send, Plus } from "lucide-react";
 import { useState } from "react";
 
 type FloatingChatInputProps = {
@@ -29,7 +29,7 @@ export function FloatingChatInput({
 		<div className="sticky bottom-0 left-0 right-0 z-10 flex justify-center px-6 pb-6 pt-4">
 			<div className="flex w-full max-w-[574px] items-center gap-3 rounded-sm border border-neutral-300 bg-white px-4 py-3 shadow-sm">
 				<div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-700">
-					<ChevronDown className="h-4 w-4" strokeWidth={2} />
+					<Plus className="h-4 w-4" strokeWidth={2} />
 				</div>
 				<input
 					type="text"

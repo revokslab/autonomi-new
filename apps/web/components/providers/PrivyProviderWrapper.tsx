@@ -22,7 +22,12 @@ export function PrivyProviderWrapper({
 					theme: "light",
 				},
 				embeddedWallets: {
-					createOnLogin: "users-without-wallets",
+					ethereum: {
+						createOnLogin: "off",
+					},
+					solana: {
+						createOnLogin: "all-users",
+					},
 				},
 			}}
 		>
