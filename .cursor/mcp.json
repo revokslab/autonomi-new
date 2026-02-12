@@ -1,0 +1,8 @@
+{
+	"mcpServers": {
+		"Privy docs": {
+			"url": "https://docs.privy.io/mcp",
+			"transport": "streamableHttp"
+		}
+	}
+}

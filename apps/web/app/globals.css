@@ -92,50 +92,6 @@ body {
 	font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Remove all focus rings from OTP input and its container */
-[data-input-otp],
-[data-input-otp]:focus,
-[data-input-otp]:focus-visible,
-[data-input-otp]:focus-within {
-  outline: none !important;
-  outline-width: 0 !important;
-  outline-style: none !important;
-  box-shadow: none !important;
-  border: none !important;
-}
-
-[data-input-otp-container],
-[data-input-otp-container]:focus,
-[data-input-otp-container]:focus-within,
-[data-input-otp-container]:focus-visible,
-[data-input-otp-container] *,
-[data-input-otp-container] *:focus,
-[data-input-otp-container] *:focus-visible,
-[data-input-otp-container] *:focus-within {
-  outline: none !important;
-  outline-width: 0 !important;
-  outline-style: none !important;
-  box-shadow: none !important;
-}
-
-/* Kill global outline for elements inside OTP (base layer applies outline-ring/50 to *) */
-[data-input-otp-container],
-[data-input-otp-container] * {
-  outline-color: transparent !important;
-  outline-width: 0 !important;
-}
-
-/* Login OTP: no focus ring on wrapper or any child */
-.login-otp-wrap,
-.login-otp-wrap *,
-.login-otp-wrap *:focus,
-.login-otp-wrap *:focus-visible,
-.login-otp-wrap *:focus-within {
-  outline: none !important;
-  outline-width: 0 !important;
-  box-shadow: none !important;
-}
-
 :root {
   --radius: 0;
   --background: oklch(1 0 0);
@@ -208,14 +164,6 @@ body {
 @layer base {
   * {
     @apply border-border outline-ring/50;
-  }
-  /* No focus ring on OTP – overrides * outline */
-  [data-input-otp-container],
-  [data-input-otp-container] *,
-  [data-input-otp] {
-    outline: none !important;
-    outline-width: 0 !important;
-    box-shadow: none !important;
   }
   body {
     @apply bg-background text-foreground;

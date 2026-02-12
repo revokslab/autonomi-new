@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter, DM_Mono } from "next/font/google";
 import localFont from "next/font/local";
+import { PrivyProviderWrapper } from "@/components/providers/PrivyProviderWrapper";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -65,7 +66,7 @@ export default function RootLayout({
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${kaliceFont.variable} ${dmMono.variable} antialiased`}
 			>
-				{children}
+				<PrivyProviderWrapper>{children}</PrivyProviderWrapper>
 				<div
 					className="fixed inset-0 z-50 h-screen w-full bg-[url('/grain.jpg')] bg-repeat bg-[length:auto] opacity-[0.04] pointer-events-none select-none"
 					aria-hidden
