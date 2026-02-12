@@ -31,7 +31,10 @@ COPY --from=builder /app/out/full/ .
 ARG NEXT_PUBLIC_PRIVY_APP_ID
 
 # Build engine types (dependency) then dashboard only
+# CI=1 + TURBO_UI=plain avoid interactive/stream UI so the RUN exits cleanly in Docker
 ENV NODE_ENV=production
+ENV CI=1
+ENV TURBO_UI=plain
 RUN bunx turbo run build --filter=@autonomi/web --only
 
 # Runner stage - clean bun image, no turbo
