@@ -1,3 +1,4 @@
+import { Scalar } from "@scalar/hono-api-reference";
 import { Server as Engine } from "@socket.io/bun-engine";
 import { sql } from "drizzle-orm";
 import { cors } from "hono/cors";
@@ -39,6 +40,39 @@ app.use(
 		exposeHeaders: ["Content-Length"],
 		maxAge: 86400,
 	}),
+);
+
+app.doc("/openapi", {
+	openapi: "3.1.0",
+	info: {
+		version: "0.0.1",
+		title: "Autonomi Developer API",
+		description: "Autonomi Developer API",
+		contact: {
+			name: "Support",
+			email: "hello@autonomi.run",
+			url: "autonomi.run",
+		},
+	},
+	servers: [
+		{
+			url: env.BETTER_AUTH_URL,
+			description: "Production API",
+		},
+	],
+	security: [{ token: [] }],
+});
+
+// Register security scheme
+app.openAPIRegistry.registerComponent("securitySchemes", "token", {
+	type: "http",
+	scheme: "bearer",
+	description: "Default authenticaton mechanism",
+});
+
+app.get(
+	"/",
+	Scalar({ url: "/openapi", pageTitle: "Autonomi API", theme: "deepSpace" }),
 );
 
 app.on(["POST", "GET"], "/auth/*", (c) => {
