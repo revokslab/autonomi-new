@@ -27,15 +27,20 @@ RUN bun install
 # Copy full source from pruned workspace
 COPY --from=builder /app/out/full/ .
 
-# Build-time NEXT_PUBLIC_ env vars
+# Build-time NEXT_PUBLIC_ env vars (Railway passes these as build args)
 ARG NEXT_PUBLIC_PRIVY_APP_ID
 
+# Release tracking (Railway provides the git SHA automatically)
+ARG RAILWAY_GIT_COMMIT_SHA
+ENV NEXT_PUBLIC_SENTRY_RELEASE=$RAILWAY_GIT_COMMIT_SHA
+ENV CI=true
+
 # Build engine types (dependency) then dashboard only
-# CI=1 + TURBO_UI=plain avoid interactive/stream UI so the RUN exits cleanly in Docker
+# TURBO_UI=plain avoid interactive/stream UI so the RUN exits cleanly in Docker
 ENV NODE_ENV=production
-ENV CI=1
 ENV TURBO_UI=plain
 ENV TURBO_TELEMETRY_DISABLED=1
+
 
 # Force no cache, no daemon, single run
 RUN bunx turbo run build --filter=@autonomi/web...
