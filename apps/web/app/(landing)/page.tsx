@@ -8,7 +8,7 @@ import { useHotkeys } from "react-hotkeys-hook";
 
 import { ButtonWithCorners } from "./_components/button-with-corners";
 import { Keycap } from "./_components/keycap";
-import { Discord, Telegram, XformerlyTwitter } from "@/components/svg";
+import { GitHub, XformerlyTwitter } from "@/components/svg";
 
 const hotkeysOptions = {
 	preventDefault: true,
@@ -149,25 +149,18 @@ export default function Home() {
 					</Link>
 					<div className="flex items-center gap-4">
 						<Link
-							href="https://t.me/revoks"
-							target="_blank"
-							rel="noopener noreferrer"
-						>
-							<Telegram className="h-5 w-5 shrink-0" aria-hidden />
-						</Link>
-						<Link
-							href="https://x.com/revoks"
+							href="https://x.com/autonomidotrun"
 							target="_blank"
 							rel="noopener noreferrer"
 						>
 							<XformerlyTwitter className="h-4 w-4 shrink-0" aria-hidden />
 						</Link>
 						<Link
-							href="https://discord.gg/revoks"
+							href="https://github.com/revokslab/autonomi-new"
 							target="_blank"
 							rel="noopener noreferrer"
 						>
-							<Discord className="h-5 w-5 shrink-0" aria-hidden />
+							<GitHub className="h-5 w-5 shrink-0" aria-hidden />
 						</Link>
 					</div>
 				</div>
