@@ -97,8 +97,8 @@ export default function Home() {
 								</svg>
 							</span>
 							<span>Backed by</span>
-							<span className="font-medium text-[#FF6B52]">Star</span>
-							<span>.fun</span>
+							<span className="font-medium text-[#FF6B52]">bags</span>
+							<span>.fm</span>
 						</p>
 					</ButtonWithCorners>
 				</div>
