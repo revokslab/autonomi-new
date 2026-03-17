@@ -20,23 +20,13 @@ export default function Home() {
 	const router = useRouter();
 
 	// D - Demo: scroll to #demo
-	useHotkeys(
-		"d, D",
-		() =>
-			document.getElementById("demo")?.scrollIntoView({ behavior: "smooth" }),
-		hotkeysOptions,
-	);
+	useHotkeys("d, D", () => router.push("/login"), hotkeysOptions);
 
 	// L - Login: navigate to /login
 	useHotkeys("l, L", () => router.push("/login"), hotkeysOptions);
 
 	// G - Get Started: scroll to #book
-	useHotkeys(
-		"g, G",
-		() =>
-			document.getElementById("book")?.scrollIntoView({ behavior: "smooth" }),
-		hotkeysOptions,
-	);
+	useHotkeys("g, G", () => router.push("/login"), hotkeysOptions);
 
 	return (
 		<div className="flex h-screen min-h-0 flex-col overflow-hidden text-neutral-900">
@@ -128,7 +118,7 @@ export default function Home() {
 				<div id="book">
 					<ButtonWithCorners>
 						<Link
-							href="#book"
+							href="/login"
 							className="inline-flex items-center gap-2 rounded-none border border-neutral-300 bg-transparent px-8 py-3 text-sm font-normal text-neutral-900 transition hover:bg-neutral-100/80"
 							style={{ fontFamily: "var(--font-dm-mono), monospace" }}
 						>
