@@ -6,6 +6,7 @@ import {
 	Bot,
 	Terminal,
 	Settings,
+	ArrowLeftRight,
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -15,6 +16,7 @@ const navItems = [
 	{ href: "/dashboard", icon: LayoutGrid, label: "Overview" },
 	{ href: "/dashboard/chat", icon: MessageCircle, label: "Chat" },
 	{ href: "/dashboard/agents", icon: Bot, label: "Agents" },
+	{ href: "/dashboard/swap", icon: ArrowLeftRight, label: "Swap" },
 	{ href: "/dashboard/terminal", icon: Terminal, label: "Terminal" },
 	{ href: "/dashboard/settings", icon: Settings, label: "Settings" },
 ];

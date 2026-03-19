@@ -82,36 +82,19 @@ export default function SettingsPage() {
 		w.walletClientType === "privy" || w.walletClientType === "privy-v2";
 
 	const embeddedWallets = walletAccounts.filter(isEmbedded);
-	const embeddedEthereum = embeddedWallets.find(
-		(w) => w.chainType === "ethereum",
-	);
 	const embeddedSolana = embeddedWallets.find((w) => w.chainType === "solana");
 
-	const [exporting, setExporting] = useState<"ethereum" | "solana" | null>(
-		null,
-	);
-
-	const handleExportEthereum = useCallback(async () => {
-		if (!embeddedEthereum?.address) return;
-		setExporting("ethereum");
-		try {
-			await exportWallet({ address: embeddedEthereum.address });
-		} catch (e) {
-			console.error("Export Ethereum key failed:", e);
-		} finally {
-			setExporting(null);
-		}
-	}, [exportWallet, embeddedEthereum?.address]);
+	const [exporting, setExporting] = useState(false);
 
 	const handleExportSolana = useCallback(async () => {
 		if (!embeddedSolana?.address) return;
-		setExporting("solana");
+		setExporting(true);
 		try {
 			await exportWallet({ address: embeddedSolana.address });
 		} catch (e) {
 			console.error("Export Solana key failed:", e);
 		} finally {
-			setExporting(null);
+			setExporting(false);
 		}
 	}, [exportWallet, embeddedSolana?.address]);
 
@@ -232,7 +215,7 @@ export default function SettingsPage() {
 										<button
 											type="button"
 											onClick={handleExportSolana}
-											disabled={!!exporting}
+											disabled={exporting}
 											className="flex w-full items-center gap-4 px-4 py-3 text-left transition-colors hover:bg-neutral-50 disabled:opacity-60"
 										>
 											<div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-neutral-100 text-neutral-600">
@@ -244,35 +227,7 @@ export default function SettingsPage() {
 											>
 												Export Solana private key
 											</span>
-											{exporting === "solana" ? (
-												<span className="text-xs text-neutral-500">
-													Opening Privy…
-												</span>
-											) : (
-												<ChevronRight className="h-5 w-5 text-neutral-400" />
-											)}
-										</button>
-										<div className="border-t border-neutral-100" />
-									</>
-								)}
-								{embeddedEthereum?.address && (
-									<>
-										<button
-											type="button"
-											onClick={handleExportEthereum}
-											disabled={!!exporting}
-											className="flex w-full items-center gap-4 px-4 py-3 text-left transition-colors hover:bg-neutral-50 disabled:opacity-60"
-										>
-											<div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-neutral-100 text-neutral-600">
-												<Key className="h-5 w-5" strokeWidth={1.5} />
-											</div>
-											<span
-												className="flex-1 font-medium text-neutral-900"
-												style={fontSans}
-											>
-												Export Ethereum private key
-											</span>
-											{exporting === "ethereum" ? (
+											{exporting ? (
 												<span className="text-xs text-neutral-500">
 													Opening Privy…
 												</span>

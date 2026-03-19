@@ -20,11 +20,9 @@ export function PrivyProviderWrapper({
 				loginMethods: ["email", "google", "twitter", "wallet"],
 				appearance: {
 					theme: "light",
+					walletChainType: "solana",
 				},
 				embeddedWallets: {
-					ethereum: {
-						createOnLogin: "off",
-					},
 					solana: {
 						createOnLogin: "all-users",
 					},

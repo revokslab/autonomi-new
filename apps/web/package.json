@@ -6,16 +6,21 @@
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
-		"lint": "eslint"
+		"lint": "eslint",
+		"test": "vitest run"
 	},
 	"dependencies": {
 		"@hugeicons/core-free-icons": "^3.1.1",
 		"@hugeicons/react": "^1.1.4",
+		"@jup-ag/api": "^6.0.48",
 		"@privy-io/react-auth": "^3.13.1",
+		"@solana/web3.js": "^1.98.4",
+		"bs58": "^6.0.0",
 		"clsx": "^2.1.1",
 		"input-otp": "^1.4.2",
 		"lucide-react": "^0.460.0",
 		"next": "16.1.6",
+		"qrcode": "^1.5.4",
 		"react": "19.2.3",
 		"react-dom": "19.2.3",
 		"react-hotkeys-hook": "^5.2.4",
@@ -31,6 +36,7 @@
 		"eslint-config-next": "16.1.6",
 		"tailwind-merge": "^2.5.4",
 		"tailwindcss": "^4",
-		"typescript": "^5"
+		"typescript": "^5",
+		"vitest": "^4.1.0"
 	}
 }

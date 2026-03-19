@@ -1,9 +1,19 @@
 "use client";
 
 import Image from "next/image";
+import { useEffect, useMemo, useState } from "react";
 import { usePrivy } from "@privy-io/react-auth";
+import { useRouter } from "next/navigation";
+import { PublicKey } from "@solana/web3.js";
 import { Header } from "@/components/dashboard/Header";
 import { FloatingChatInput } from "@/components/dashboard/FloatingChatInput";
+import {
+	createSolanaConnection,
+	formatSol,
+	getEmbeddedSolanaAddressFromLinkedAccounts,
+	lamportsToSol,
+} from "@/lib/solana";
+import type { PrivyLinkedAccount } from "@/lib/solana";
 import {
 	Plus,
 	ArrowLeftRight,
@@ -52,14 +62,6 @@ const tradePairs = [
 		changePct: "-1.22%",
 		sentiment: "Bullish" as const,
 		logoUrl: "https://assets.coingecko.com/coins/images/1/small/bitcoin.png",
-	},
-	{
-		pair: "ETH · USDC",
-		price: "$1,914.9",
-		change: "0.47",
-		changePct: "0.47%",
-		sentiment: "Neutral" as const,
-		logoUrl: "https://assets.coingecko.com/coins/images/279/small/ethereum.png",
 	},
 	{
 		pair: "SOL · USDC",
@@ -165,11 +167,42 @@ const cryptoInsights = [
 ];
 
 export default function DashboardPage() {
+	const router = useRouter();
 	const { user } = usePrivy();
 	const email = user?.linkedAccounts?.find((a) => a.type === "email") as
 		| { address?: string }
 		| undefined;
 	const name = email?.address?.split("@")[0] ?? "there";
+
+	const solAddress = useMemo(
+		() =>
+			getEmbeddedSolanaAddressFromLinkedAccounts(
+				(user?.linkedAccounts as unknown as PrivyLinkedAccount[]) ?? [],
+			),
+		[user?.linkedAccounts],
+	);
+	const [connection] = useState(() => createSolanaConnection());
+	const [solLamports, setSolLamports] = useState<number | null>(null);
+
+	useEffect(() => {
+		let cancelled = false;
+		const run = async () => {
+			if (!solAddress) {
+				setSolLamports(null);
+				return;
+			}
+			try {
+				const lamports = await connection.getBalance(new PublicKey(solAddress));
+				if (!cancelled) setSolLamports(lamports);
+			} catch {
+				if (!cancelled) setSolLamports(null);
+			}
+		};
+		void run();
+		return () => {
+			cancelled = true;
+		};
+	}, [connection, solAddress]);
 
 	return (
 		<>
@@ -214,11 +247,14 @@ export default function DashboardPage() {
 							className="mt-1 text-3xl tracking-tight"
 							style={{ fontFamily: "var(--font-geist-mono), monospace" }}
 						>
-							$0.00
+							{solLamports == null
+								? "—"
+								: formatSol(lamportsToSol(solLamports), { maxDecimals: 6 })}
 						</p>
 						<div className="mt-4 flex gap-3">
 							<button
 								type="button"
+								onClick={() => router.push("/dashboard/deposit")}
 								className="flex flex-1 items-center justify-center gap-2 rounded-sm border border-white/20 bg-white/10 py-3 text-sm font-medium transition-colors hover:bg-white/20"
 								style={{
 									fontFamily:
@@ -230,6 +266,7 @@ export default function DashboardPage() {
 							</button>
 							<button
 								type="button"
+								onClick={() => router.push("/dashboard/swap")}
 								className="flex flex-1 items-center justify-center gap-2 rounded-sm border border-white/20 bg-white/10 py-3 text-sm font-medium transition-colors hover:bg-white/20"
 								style={{
 									fontFamily:
@@ -241,6 +278,7 @@ export default function DashboardPage() {
 							</button>
 							<button
 								type="button"
+								onClick={() => router.push("/dashboard/withdraw")}
 								className="flex flex-1 items-center justify-center gap-2 rounded-sm border border-white/20 bg-white/10 py-3 text-sm font-medium transition-colors hover:bg-white/20"
 								style={{
 									fontFamily:
