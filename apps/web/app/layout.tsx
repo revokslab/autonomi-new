@@ -8,8 +8,6 @@ import {
 	Inter,
 } from "next/font/google";
 import localFont from "next/font/local";
-
-import { Providers } from "@/components/providers";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -70,7 +68,7 @@ export default function RootLayout({
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${kaliceFont.variable} ${dmMono.variable} ${hedvigLettersSans.variable} ${hedvigLettersSerif.variable} antialiased`}
 			>
-				<Providers>{children}</Providers>
+				{children}
 			</body>
 		</html>
 	);

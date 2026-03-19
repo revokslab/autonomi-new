@@ -2,7 +2,7 @@ import type { SVGProps } from "react";
 
 const GitHub = (props: SVGProps<SVGSVGElement>) => (
 	<svg {...props} viewBox="0 0 1024 1024" fill="none">
-		<title>GitHub</title>
+		<title>Github</title>
 		<path
 			fillRule="evenodd"
 			clipRule="evenodd"

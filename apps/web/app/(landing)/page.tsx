@@ -8,7 +8,7 @@ import { useHotkeys } from "react-hotkeys-hook";
 
 import { ButtonWithCorners } from "./_components/button-with-corners";
 import { Keycap } from "./_components/keycap";
-import { Discord, Telegram, XformerlyTwitter } from "@/components/svg";
+import { XformerlyTwitter } from "@/components/svg";
 
 const hotkeysOptions = {
 	preventDefault: true,
@@ -20,23 +20,13 @@ export default function Home() {
 	const router = useRouter();
 
 	// D - Demo: scroll to #demo
-	useHotkeys(
-		"d, D",
-		() =>
-			document.getElementById("demo")?.scrollIntoView({ behavior: "smooth" }),
-		hotkeysOptions,
-	);
+	useHotkeys("d, D", () => router.push("/login"), hotkeysOptions);
 
 	// L - Login: navigate to /login
 	useHotkeys("l, L", () => router.push("/login"), hotkeysOptions);
 
 	// G - Get Started: scroll to #book
-	useHotkeys(
-		"g, G",
-		() =>
-			document.getElementById("book")?.scrollIntoView({ behavior: "smooth" }),
-		hotkeysOptions,
-	);
+	useHotkeys("g, G", () => router.push("/login"), hotkeysOptions);
 
 	return (
 		<div className="flex h-screen min-h-0 flex-col overflow-hidden text-neutral-900">
@@ -97,8 +87,8 @@ export default function Home() {
 								</svg>
 							</span>
 							<span>Backed by</span>
-							<span className="font-medium text-[#FF6B52]">Star</span>
-							<span>.fun</span>
+							<span className="font-medium text-[#FF6B52]">bags</span>
+							<span>.fm</span>
 						</p>
 					</ButtonWithCorners>
 				</div>
@@ -128,7 +118,7 @@ export default function Home() {
 				<div id="book">
 					<ButtonWithCorners>
 						<Link
-							href="#book"
+							href="/login"
 							className="inline-flex items-center gap-2 rounded-none border border-neutral-300 bg-transparent px-8 py-3 text-sm font-normal text-neutral-900 transition hover:bg-neutral-100/80"
 							style={{ fontFamily: "var(--font-dm-mono), monospace" }}
 						>
@@ -149,25 +139,11 @@ export default function Home() {
 					</Link>
 					<div className="flex items-center gap-4">
 						<Link
-							href="https://t.me/revoks"
-							target="_blank"
-							rel="noopener noreferrer"
-						>
-							<Telegram className="h-5 w-5 shrink-0" aria-hidden />
-						</Link>
-						<Link
-							href="https://x.com/revoks"
+							href="https://x.com/autonomidotrun"
 							target="_blank"
 							rel="noopener noreferrer"
 						>
 							<XformerlyTwitter className="h-4 w-4 shrink-0" aria-hidden />
-						</Link>
-						<Link
-							href="https://discord.gg/revoks"
-							target="_blank"
-							rel="noopener noreferrer"
-						>
-							<Discord className="h-5 w-5 shrink-0" aria-hidden />
 						</Link>
 					</div>
 				</div>
